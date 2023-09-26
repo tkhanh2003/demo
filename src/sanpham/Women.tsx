@@ -2,7 +2,15 @@ import React from 'react';
 import Women01 from "../assets/images/women-01.jpg"
 import Women02 from "../assets/images/women-02.jpg"
 import Women03 from "../assets/images/women-03.jpg"
+import Slider from 'react-slick';
 const Women = () => {
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+      };
     return (
         <section className="section" id="women">
             <div className="container">
@@ -17,9 +25,8 @@ const Women = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
-                        <div className="women-item-carousel">
-                            <div className="owl-women-item owl-carousel">
-                                <div className="item">
+                    <Slider {...settings}>
+                    <div className="item">
                                     <div className="thumb">
                                         <div className="hover-content">
                                             <ul>
@@ -30,7 +37,7 @@ const Women = () => {
                                         </div>
                                         <img src={Women01} alt="" />
                                     </div>
-                                    <div className="down-content">
+                                    <div className="down-content mx-3">
                                         <h4>New Green Jacket</h4>
                                         <span>$75.00</span>
                                         <ul className="stars">
@@ -53,7 +60,7 @@ const Women = () => {
                                         </div>
                                         <img src={Women02} alt="" />
                                     </div>
-                                    <div className="down-content">
+                                    <div className="down-content mx-3">
                                         <h4>Classic Dress</h4>
                                         <span>$45.00</span>
                                         <ul className="stars">
@@ -76,7 +83,7 @@ const Women = () => {
                                         </div>
                                         <img src={Women03} alt="" />
                                     </div>
-                                    <div className="down-content">
+                                    <div className="down-content mx-3">
                                         <h4>Spring Collection</h4>
                                         <span>$130.00</span>
                                         <ul className="stars">
@@ -99,7 +106,7 @@ const Women = () => {
                                         </div>
                                         <img src={Women01} alt="" />
                                     </div>
-                                    <div className="down-content">
+                                    <div className="down-content mx-3">
                                         <h4>Classic Spring</h4>
                                         <span>$120.00</span>
                                         <ul className="stars">
@@ -111,8 +118,8 @@ const Women = () => {
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+            </Slider>
+                      
                     </div>
                 </div>
             </div>
