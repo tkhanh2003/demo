@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import firebase from 'firebase/app';
 import 'firebase/database';
 import Slider from "react-slick";
 import { firestore } from "../firebaseConfig";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../reducer/cart";
 
 interface Product {
   Anh: string;
@@ -17,6 +18,7 @@ interface Product {
 
 const Men = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const dispatch = useDispatch();
   const settings = {
     dots: true,
     infinite: true,
@@ -37,6 +39,10 @@ const Men = () => {
       console.error("Error getting documents: ", error);
     });
   }, []);
+
+  function addToCart(product: Product): void {
+    dispatch(addProduct(product));
+  }
 
   return (
     <section className="section mt-5" id="men">
@@ -64,7 +70,7 @@ const Men = () => {
                           </a>
                         </li>
                         <li>
-                          <a href="../Cart">
+                          <a type="button" onClick={()=>addToCart(product)}>
                             <i className="fa fa-shopping-cart"></i>
                           </a>
                         </li>

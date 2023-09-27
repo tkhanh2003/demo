@@ -6,16 +6,18 @@ import Home from "./../component/Home";
 import Header from "../sanpham/Header";
 import Cart from "../cart/Cart";
 import Single_product from "../sanpham/Single_product";
+import { Provider } from 'react-redux';
+import store from '../reducer/store';
 const Layout = () => {
   return (
-    <>
+    <Provider store={store}>
       <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/Header" element={<Header />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Single_product" element={<Single_product />} />
       </Routes>
-    </>
+    </Provider>
   );
 };
 
