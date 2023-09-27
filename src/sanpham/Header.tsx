@@ -1,8 +1,13 @@
 import React from 'react';
 import Logo from "../assets/images/logo.png"
 import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const navigate = useNavigate();
+const handleCart = () => {
+    navigate("/Cart");
+  };
     return (
 
         <header className="header-area header-sticky">
@@ -23,7 +28,7 @@ const Header = () => {
                                 <li className="scroll-to-section"><a href="#women">Nữ</a></li>
                                 <li className="scroll-to-section"><a href="#kids">Trẻ em</a></li>
                                 <li className="scroll-to-section"><a href="#accessories">Phụ kiện</a></li>
-                                <li className="scroll-to-section"><a href="#shoppingcart">Giỏ hàng</a></li>
+                                <li className="scroll-to-section"><a href="#shoppingcart" onClick={handleCart}>Giỏ hàng</a></li>
 
                                 <li className="submenu">
                                     <a href="javascript:;">Thông tin cửa hàng</a>

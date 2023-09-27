@@ -4,8 +4,8 @@ import Header from "../sanpham/Header"
 import Men from "../sanpham/Men"
 import Women from "../sanpham/Women"
 import Kid from "../sanpham/Kid"
-import Accessories from "../sanpham/Accessories"
 import Footer from "../sanpham/Footer";
+import MainBanner from "../sanpham/Banner";
 
 const Home = () => {
 
@@ -13,10 +13,10 @@ const Home = () => {
     
     <>
       <Header/>
+      <MainBanner/>
       <Men />
       <Women />
       <Kid />
-      <Accessories />
       <Footer />
       
     </>
