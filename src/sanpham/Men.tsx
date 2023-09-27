@@ -59,7 +59,7 @@ const Men = () => {
                     <div className="hover-content">
                       <ul>
                         <li>
-                          <a href="single-product.html">
+                          <a href="../Single_product">
                             <i className="fa fa-eye"></i>
                           </a>
                         </li>
