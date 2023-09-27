@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import 'firebase/database';
+import "firebase/database";
 import Slider from "react-slick";
 import { firestore } from "../firebaseConfig";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../reducer/cart";
+import { Link } from "react-router-dom";
 
 interface Product {
+  DocId: string;
   Anh: string;
   Gia: number;
   Mo_ta: string;
@@ -27,17 +29,22 @@ const Men = () => {
     slidesToScroll: 1,
   };
   useEffect(() => {
-    const productsRef = firestore.collection('Product');
+    const productsRef = firestore.collection("Product");
 
-    productsRef.get().then((querySnapshot) => {
-      const productList: Product[] = [];
-      querySnapshot.forEach((doc) => {
-        productList.push(doc.data() as Product);
+    productsRef
+      .get()
+      .then((querySnapshot) => {
+        const productList: Product[] = [];
+        querySnapshot.forEach((doc) => {
+          productList.push({ ...doc.data(), DocId: doc.id } as Product);
+          // console.log("aa", doc.data());
+          // console.log("bbb", doc.id);
+        });
+        setProducts(productList);
+      })
+      .catch((error) => {
+        console.error("Error getting documents: ", error);
       });
-      setProducts(productList);
-    }).catch((error) => {
-      console.error("Error getting documents: ", error);
-    });
   }, []);
 
   function addToCart(product: Product): void {
@@ -65,18 +72,26 @@ const Men = () => {
                     <div className="hover-content">
                       <ul>
                         <li>
-                          <a href="../Single_product">
+                          <Link to={`../Single_product?id=${product.DocId}`}>
                             <i className="fa fa-eye"></i>
-                          </a>
+                          </Link>
                         </li>
                         <li>
-                          <a type="button" onClick={()=>addToCart(product)}>
+                          <a type="button" onClick={() => addToCart(product)}>
                             <i className="fa fa-shopping-cart"></i>
                           </a>
                         </li>
                       </ul>
                     </div>
-                    <img src={product.Anh} alt="" style={{ width: '340px', height: '360px', margin: '0 35px' }} />
+                    <img
+                      src={product.Anh}
+                      alt=""
+                      style={{
+                        width: "340px",
+                        height: "360px",
+                        margin: "0 35px",
+                      }}
+                    />
                   </div>
                   <div className="down-content text-center mx-3">
                     <h4>{product.Ten_san_pham}</h4>

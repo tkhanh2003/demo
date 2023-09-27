@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../assets/images/logo.png';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Footer from './Footer';
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { firestore } from '../firebaseConfig';
+import { useSearchParams } from 'react-router-dom';
+import { DocumentData } from '@firebase/firestore-types';
+
+
+interface Product {
+  Anh: string;
+  Gia: number;
+  Mo_ta: string;
+  Phan_loai: string;
+  Ten_san_pham: string;
+  id_sanpham: string;
+}
 
 function Single_product() {
+  const [product, setProduct] = useState<DocumentData | undefined>(undefined);
+  const [searchParams] = useSearchParams();
+  useEffect(() => {    
+    const productsRef = firestore.collection('Product');
+    productsRef.doc(searchParams.get('id')!).get().then((docRef) => { 
+      console.log(docRef.data());
+      
+      if(docRef.data())
+        setProduct(docRef.data());
+    })
+    .catch((error) => { });
+  },[]);
   return (
     <div>
       {/* Header */}
@@ -107,6 +130,7 @@ function Single_product() {
               Vi xử lý Dual-core 1 Cortex-A9 tốc độ 1GHz
             </div>
           </div>
+          {product && (<img src={product.Anh}/>)}
         </div>
       </div>
     </div>

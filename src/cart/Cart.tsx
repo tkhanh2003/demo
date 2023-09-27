@@ -6,7 +6,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useDispatch, useSelector } from "react-redux";
 import { removeProduct } from "../reducer/cart";
 function Cart() {
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state:any) => state.cart);
   const dispatch = useDispatch();
 
   function removeItemInCart(item: any): void {
@@ -45,9 +45,9 @@ function Cart() {
               </tr>
             </thead>
             <tbody id="datarow">
-              {cart.map((item, index) => (
-                <tr>
-                  <td>{index}</td>
+              {cart.map((item:any, index:Number) => (
+                <tr key={String(index)}>
+                  <td>{String(index)}</td>
                   <td>
                     <img width="50" height="50" src={item.Anh} className="hinhdaidien" />
                   </td>
@@ -70,7 +70,7 @@ function Cart() {
               ))}
             </tbody>
           </table>
-          <a href="../home" className="btn btn-warning btn-md">
+          <a href="/" className="btn btn-warning btn-md">
             <i className="fa fa-arrow-left" aria-hidden="true" />
             &nbsp;Quay về trang chủ
           </a>

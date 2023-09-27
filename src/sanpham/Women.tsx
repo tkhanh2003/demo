@@ -35,6 +35,7 @@ const Women = () => {
       }).catch((error) => {
         console.error("Error getting documents: ", error);
       });
+      
     }, []);
   
     return (
