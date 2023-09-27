@@ -13,7 +13,7 @@ interface Product {
   Anh: string;
   Gia: number;
   Mo_ta: string;
-  Phan_loai: string;
+  Phan_loai: 1;
   Ten_san_pham: string;
   id_sanpham: string;
 }
@@ -31,9 +31,7 @@ const Men = () => {
   useEffect(() => {
     const productsRef = firestore.collection("Product");
 
-    productsRef
-      .get()
-      .then((querySnapshot) => {
+    productsRef.where('Phan_loai' , '==' ,'1').get().then((querySnapshot) => {
         const productList: Product[] = [];
         querySnapshot.forEach((doc) => {
           productList.push({ ...doc.data(), DocId: doc.id } as Product);
@@ -55,9 +53,9 @@ const Men = () => {
     <section className="section mt-5" id="men">
       <div className="container">
         <div className="row">
-          <div className="col-lg-6">
+          <div className="col-lg-12 text-center">
             <div className="section-heading">
-              <h2>Sản phẩm mới của nam</h2>
+            <h2 className="text-center">Trang phục nam</h2>
             </div>
           </div>
         </div>
@@ -95,11 +93,11 @@ const Men = () => {
                   </div>
                   <div className="down-content text-center mx-3">
                     <h4>{product.Ten_san_pham}</h4>
-                    <span>${product.Gia}</span>
+                    <span>{product.Gia}$</span>
                   </div>
                 </div>
               ))}
-            </Slider>
+            </Slider> 
           </div>
         </div>
       </div>

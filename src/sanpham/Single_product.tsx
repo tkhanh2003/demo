@@ -7,6 +7,7 @@ import Footer from './Footer';
 import { firestore } from '../firebaseConfig';
 import { useSearchParams } from 'react-router-dom';
 import { DocumentData } from '@firebase/firestore-types';
+import { set } from 'firebase/database';
 
 
 interface Product {
@@ -19,18 +20,20 @@ interface Product {
 }
 
 function Single_product() {
-  const [product, setProduct] = useState<DocumentData | undefined>(undefined);
+  const [product, setProduct] = useState<any | undefined>(undefined);
   const [searchParams] = useSearchParams();
+  
   useEffect(() => {    
     const productsRef = firestore.collection('Product');
     productsRef.doc(searchParams.get('id')!).get().then((docRef) => { 
-      console.log(docRef.data());
-      
-      if(docRef.data())
-        setProduct(docRef.data());
-    })
-    .catch((error) => { });
-  },[]);
+      if(docRef.exists) {
+        const data = docRef.data();
+        setProduct(data);
+      }
+    }).catch((error) => {
+      console.error("Error getting document:", error);
+     });
+  },[searchParams]);
   return (
     <div>
       {/* Header */}
@@ -40,7 +43,7 @@ function Single_product() {
             <div className="col-12">
               <nav className="main-nav">
                 <a href="index.html" className="logo">
-                  <img src={logo} alt="Logo" /> {/* Đổi lại đường dẫn logo nếu cần */}
+                  <img src={logo} alt="Logo" />
                 </a>
                 <ul className="nav">
                   <li className="scroll-to-section"><a href="#top" className="active">Trang chủ</a></li>
@@ -68,74 +71,63 @@ function Single_product() {
         </div>
       </header>
 
-      <main role="main">
-    {/* Block content - Đục lỗ trên giao diện bố cục chung, đặt tên là `content` */}
-    <div className="container mt-4">
-      <div id="thongbao" className="alert alert-danger d-none face" role="alert">
-        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div className="card">
-        <div className="container-fliud">
-          <form name="frmsanphamchitiet" id="frmsanphamchitiet" method="post" action="/php/twig/frontend/giohang/themvaogiohang">
-            <input type="hidden" name="sp_ma" id="sp_ma" defaultValue={5} />
-            <input type="hidden" name="sp_ten" id="sp_ten" defaultValue="Samsung Galaxy Tab 10.1 3G 16G" />
-            <input type="hidden" name="sp_gia" id="sp_gia" defaultValue={10990000.00} />
-            <input type="hidden" name="hinhdaidien" id="hinhdaidien" defaultValue="samsung-galaxy-tab-10.jpg" />
-            <div className="wrapper row">
-              <div className="preview col-md-6">
-                <div className="preview-pic tab-content">
-                </div>
-              </div>
-              <div className="details col-md-6">
-                <div className="rating">
-                  <div className="stars">
-<span className="fa fa-star checked" />
-                    <span className="fa fa-star checked" />
-                    <span className="fa fa-star checked" />
-                    <span className="fa fa-star" />
-                    <span className="fa fa-star" />
+      <main role="main" style={{ marginTop: '150px' }}>
+        <div className="container mt-4">
+          <div id="thongbao" className="alert alert-danger d-none face" role="alert">
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div className="card mt-10" style={{ marginBottom: '100px' }}>
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-md-6">
+                  <h3 style={{ marginLeft: '50px', marginTop: '50px' }}>Thông tin chi tiết về Sản phẩm</h3>
+                  <div className="preview-pic tab-content">
+                    {product && <img src={product.Anh} alt="" style={{ width: '400px', height: '400px', marginBottom: '50px', marginLeft: '50px' }} />}
                   </div>
-                  <span className="review-no">999 reviews</span>
                 </div>
-                <h5 className="sizes">sizes:
-                  <span className="size" data-toggle="tooltip" title="cỡ Nhỏ">s</span>
-                  <span className="size" data-toggle="tooltip" title="cỡ Trung bình">m</span>
-                  <span className="size" data-toggle="tooltip" title="cỡ Lớn">l</span>
-                  <span className="size" data-toggle="tooltip" title="cỡ Đại">xl</span>
-                </h5>
-                <h5 className="colors">colors:
-                  <span className="color orange not-available" data-toggle="tooltip" title="Hết hàng" />
-                  <span className="color green" />
-                  <span className="color blue" />
-                </h5>
-                <div className="form-group">
-                  <label htmlFor="soluong">Số lượng đặt mua:</label>
-                  <input type="number" className="form-control" id="soluong" name="soluong" />
-                </div>
-                <div className="action">
-                  <a className="add-to-cart btn btn-default" id="btnThemVaoGioHang">Thêm vào giỏ hàng</a>
+                <div className="col-md-6">
+                  <div>
+                    {product && (
+                      <div>
+                        <h1 style={{ marginTop: '50px', marginBottom: '10px' }}>{product.Ten_san_pham}</h1>
+                        <p style={{ marginBottom: '10px' }}><span style={{ fontSize: '25px', fontWeight: 'bold' }}>Giá : </span>
+                        <span style={{ fontSize: '25px' }}>{product.Gia}$</span></p>
+                        <p style={{ marginBottom: '10px' }}><span style={{ fontSize: '25px', fontWeight: 'bold' }}>Mô tả : </span>
+                        <span style={{ fontSize: '20px' }}>{product.Mo_ta}</span></p>
+                      </div>
+                    )}
+                  </div>
+                  <div className="details">
+                  <div className="btn-group" style={{ marginBottom: '10px' }}>
+                    <span style={{ fontSize: '25px', fontWeight: 'bold', marginRight: '10px' }}>Kích cỡ:</span>
+                    <button type="button" className="btn btn-light">S</button>
+                    <button type="button" className="btn btn-light">M</button>
+                    <button type="button" className="btn btn-light">L</button>
+                    <button type="button" className="btn btn-light">XL</button>
+                  </div>
+                  <div className="form-row align-items-center">
+                   <div className="col-auto">
+                    <label htmlFor="soluong" className="mr-2">Số lượng đặt mua:</label>
+                   </div>
+                   <div className="col">
+                   <input type="number" className="form-control" id="soluong" name="soluong" />
+                  </div>
+                  </div>
+                    <div className="action">
+                      <a className="add-to-cart btn btn-danger" id="btnThemVaoGioHang">Thêm vào giỏ hàng</a>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
-        </div>
-</div>
-      <div className="card">
-        <div className="container-fluid">
-          <h3>Thông tin chi tiết về Sản phẩm</h3>
-          <div className="row">
-            <div className="col">
-              Vi xử lý Dual-core 1 Cortex-A9 tốc độ 1GHz
             </div>
           </div>
-          {product && (<img src={product.Anh}/>)}
         </div>
-      </div>
-    </div>
-    
-  </main><Footer />
+      </main>
+
+
+<Footer />
     </div>
   );
 }

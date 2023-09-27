@@ -10,7 +10,7 @@ interface Product {
   Anh: string;
   Gia: number;
   Mo_ta: string;
-  Phan_loai: string;
+  Phan_loai: 2;
   Ten_san_pham: string;
   id_sanpham: string;
 }
@@ -24,9 +24,9 @@ const Women = () => {
       slidesToScroll: 1,
     };
     useEffect(() => {
-      const productsRef = firestore.collection('Product_nu');
+      const productsRef = firestore.collection('Product');
   
-      productsRef.get().then((querySnapshot) => {
+      productsRef.where('Phan_loai' , '==' ,'2').get().then((querySnapshot) => {
         const productList: Product[] = [];
         querySnapshot.forEach((doc) => {
           productList.push(doc.data() as Product);
@@ -42,9 +42,9 @@ const Women = () => {
       <section className="section mt-5" id="women">
         <div className="container">
           <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-12 text-center">
               <div className="section-heading">
-                <h2>Sản phẩm mới của nữ</h2>
+                <h2 className="text-center">Trang phục nữ</h2>
               </div>
             </div>
           </div>
