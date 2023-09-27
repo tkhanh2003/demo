@@ -39,12 +39,12 @@ const Kid = () => {
   }, []);
 
   return (
-    <section className="section mt-5" id="kid">
+    <section className="section mt-5" id="men">
       <div className="container">
         <div className="row">
           <div className="col-lg-6">
             <div className="section-heading">
-              <h2>Sản phẩm mới của trẻ em</h2>
+              <h2>Sản phẩm mới của nam</h2>
             </div>
           </div>
         </div>
@@ -52,31 +52,33 @@ const Kid = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            {products.map((product, index) => (
-              <div className="item mb-4" key={index}>
-                <div className="thumb">
-                  <div className="hover-content">
-                    <ul>
-                      <li>
-                        <a href="single-product.html">
-                          <i className="fa fa-eye"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="../Cart">
-                          <i className="fa fa-shopping-cart"></i>
-                        </a>
-                      </li>
-                    </ul>
+            <Slider {...settings}>
+              {products.map((product, index) => (
+                <div className="item mb-4" key={index}>
+                  <div className="thumb">
+                    <div className="hover-content">
+                      <ul>
+                        <li>
+                          <a href="single-product.html">
+                            <i className="fa fa-eye"></i>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="../Cart">
+                            <i className="fa fa-shopping-cart"></i>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <img src={product.Anh} alt="" style={{ width: '340px', height: '360px', margin: '0 35px' }} />
                   </div>
-                  <img src={product.Anh} alt="" style={{ width: '340px', height: '360px', margin: '0 35px' }} />
+                  <div className="down-content text-center mx-3">
+                    <h4>{product.Ten_san_pham}</h4>
+                    <span>${product.Gia}</span>
+                  </div>
                 </div>
-                <div className="down-content text-center mx-3">
-                  <h4>{product.Ten_san_pham}</h4>
-                  <span>${product.Gia}</span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </Slider>
           </div>
         </div>
       </div>
