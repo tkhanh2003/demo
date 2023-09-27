@@ -44,21 +44,6 @@ const Footer = () => {
                             <li><a href="#">Tracking ID</a></li>
                         </ul>
                     </div>
-                    <div className="col-lg-12">
-                        <div className="under-footer">
-                            <p>
-                                Copyright © 2022 HexaShop Co., Ltd. All Rights Reserved. 
-                                <br />
-                                Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a>
-                            </p>
-                            <ul>
-                                <li><a href="#"><i className="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i className="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i className="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i className="fa fa-behance"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </footer>
