@@ -20,7 +20,9 @@ interface Product {
 
 const Men = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [showMessage, setShowMessage] = useState(false);
   const dispatch = useDispatch();
+
   const settings = {
     dots: true,
     infinite: true,
@@ -28,15 +30,17 @@ const Men = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
   };
+
   useEffect(() => {
     const productsRef = firestore.collection("Product");
 
-    productsRef.where('Phan_loai' , '==' ,'1').get().then((querySnapshot) => {
+    productsRef
+      .where("Phan_loai", "==", "1")
+      .get()
+      .then((querySnapshot) => {
         const productList: Product[] = [];
         querySnapshot.forEach((doc) => {
           productList.push({ ...doc.data(), DocId: doc.id } as Product);
-          // console.log("aa", doc.data());
-          // console.log("bbb", doc.id);
         });
         setProducts(productList);
       })
@@ -47,6 +51,11 @@ const Men = () => {
 
   function addToCart(product: Product): void {
     dispatch(addProduct(product));
+    setShowMessage(true);
+
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 2000);
   }
 
   return (
@@ -55,7 +64,7 @@ const Men = () => {
         <div className="row">
           <div className="col-lg-12 text-center">
             <div className="section-heading">
-            <h2 className="text-center">Trang phục nam</h2>
+              <h2 className="text-center">Trang phục nam</h2>
             </div>
           </div>
         </div>
@@ -75,7 +84,10 @@ const Men = () => {
                           </Link>
                         </li>
                         <li>
-                          <a type="button" onClick={() => addToCart(product)}>
+                          <a
+                            type="button"
+                            onClick={() => addToCart(product)}
+                          >
                             <i className="fa fa-shopping-cart"></i>
                           </a>
                         </li>
@@ -97,10 +109,15 @@ const Men = () => {
                   </div>
                 </div>
               ))}
-            </Slider> 
+            </Slider>
           </div>
         </div>
       </div>
+      {showMessage && (
+        <div className="alert alert-success text-center mt-4" role="alert">
+          Đã thêm vào giỏ hàng!
+        </div>
+      )}
     </section>
   );
 };
