@@ -50,7 +50,7 @@ const Men = () => {
   }, []);
 
   function addToCart(product: Product): void {
-    dispatch(addProduct({quantity: 1, product:product}));
+    dispatch(addProduct({ quantity: 1, product: product }));
     setShowMessage(true);
 
     setTimeout(() => {
@@ -76,7 +76,7 @@ const Men = () => {
               {products.map((product, index) => (
                 <div className="item mb-4" key={index}>
                   <div className="thumb">
-                    <div className="hover-content">
+                    <div className="hover-content d-flex justify-content-center">
                       <ul>
                         <li>
                           <Link to={`../Single_product?id=${product.DocId}`}>
@@ -84,10 +84,7 @@ const Men = () => {
                           </Link>
                         </li>
                         <li>
-                          <a
-                            type="button"
-                            onClick={() => addToCart(product)}
-                          >
+                          <a type="button" onClick={() => addToCart(product)}>
                             <i className="fa fa-shopping-cart"></i>
                           </a>
                         </li>

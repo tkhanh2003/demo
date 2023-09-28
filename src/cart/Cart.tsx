@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearAll, removeProduct } from "../reducer/cart";
 import Footer from "../sanpham/Footer";
 import Header from "../sanpham/Header";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const [successMessage, setSuccessMessage] = useState(false);
   const cart = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function removeItemInCart(item: any): void {
     dispatch(removeProduct(item));
@@ -15,7 +17,7 @@ function Cart() {
 
   function handlePayment(): void {
     dispatch(clearAll({}));
-    setSuccessMessage(true);
+    navigate("/");
   }
 
   return (

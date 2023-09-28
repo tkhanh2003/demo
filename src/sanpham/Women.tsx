@@ -71,7 +71,7 @@ const Women = () => {
               {products.map((product, index) => (
                 <div className="item mb-4" key={index}>
                   <div className="thumb">
-                    <div className="hover-content">
+                    <div className="hover-content d-flex justify-content-center">
                       <ul>
                         <li>
                           <Link to={`../Single_product?id=${product.DocId}`}>
