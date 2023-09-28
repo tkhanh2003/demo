@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeProduct } from "../reducer/cart";
+import { clearAll, removeProduct } from "../reducer/cart";
 import Footer from "../sanpham/Footer";
 import Header from "../sanpham/Header";
 
@@ -14,10 +14,7 @@ function Cart() {
   }
 
   function handlePayment(): void {
-    // Thực hiện các xử lý thanh toán tại đây
-    // ...
-
-    // Hiển thị thông báo thanh toán thành công
+    dispatch(clearAll({}));
     setSuccessMessage(true);
   }
 
@@ -45,26 +42,26 @@ function Cart() {
               </tr>
             </thead>
             <tbody id="datarow">
-              {cart.map((item: any, index: Number) => (
+              {cart.map(({quantity, product}: any, index: Number) => (
                 <tr key={String(index)}>
                   <td className="text-center">{String(index)}</td>
                   <td className="text-center">
                     <img
                       width="50"
                       height="50"
-                      src={item.Anh}
+                      src={product.Anh}
                       className="hinhdaidien"
                     />
                   </td>
-                  <td className="text-center">{item.Ten_san_pham}</td>
-                  <td className="text-center">1</td>
-                  <td className="text-center">{item.Gia}</td>
-                  <td className="text-center">{item.Gia}</td>
+                  <td className="text-center">{product.Ten_san_pham}</td>
+                  <td className="text-center">{quantity}</td>
+                  <td className="text-center">{product.Gia}</td>
+                  <td className="text-center">{product.Gia}</td>
                   <td className="text-center">
                     <a
                       id={`delete_${index}`}
                       data-sp-ma={2}
-                      onClick={() => removeItemInCart(item)}
+                      onClick={() => removeItemInCart(product)}
                       className="btn btn-danger btn-delete-sanpham"
                     >
                       <i className="fa fa-trash" aria-hidden="true" /> Xóa

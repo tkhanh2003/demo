@@ -45,7 +45,7 @@ const Kid = () => {
   }, []);
   
   function addToCart(product: Product): void {
-    dispatch(addProduct(product));
+    dispatch(addProduct({quantity: 1, product:product}));
     setShowMessage(true);
 
     setTimeout(() => {

@@ -5,9 +5,9 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Footer from './Footer';
 import { firestore } from '../firebaseConfig';
-import { useSearchParams } from 'react-router-dom';
-import { DocumentData } from '@firebase/firestore-types';
-import { set } from 'firebase/database';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { addProduct } from '../reducer/cart';
+import { useDispatch } from 'react-redux';
 
 
 interface Product {
@@ -20,8 +20,16 @@ interface Product {
 }
 
 function Single_product() {
+  const dispatch = useDispatch();
   const [product, setProduct] = useState<any | undefined>(undefined);
   const [searchParams] = useSearchParams();
+  const [value, setValue] = useState(1);
+  const navigate = useNavigate();
+
+  function addToCart(): void {
+    dispatch(addProduct({quantity: value, product:product}));
+    navigate(-1);
+  }
   
   useEffect(() => {    
     const productsRef = firestore.collection('Product');
@@ -34,6 +42,10 @@ function Single_product() {
       console.error("Error getting document:", error);
      });
   },[searchParams]);
+  const handleChange = (event:any) => {
+    setValue(event.target.value);
+  };
+
   return (
     <div>
       {/* Header */}
@@ -112,11 +124,11 @@ function Single_product() {
                     <label htmlFor="soluong" className="mr-2">Số lượng đặt mua:</label>
                    </div>
                    <div className="col">
-                   <input type="number" className="form-control" id="soluong" name="soluong" />
+                   <input type="number" className="form-control" value={value} onChange={handleChange}/>
                   </div>
                   </div>
                     <div className="action">
-                      <a className="add-to-cart btn btn-danger" id="btnThemVaoGioHang">Thêm vào giỏ hàng</a>
+                      <a className="add-to-cart btn btn-danger" role='button' onClick={()=>addToCart()}>Thêm vào giỏ hàng</a>
                     </div>
                   </div>
                 </div>

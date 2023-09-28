@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from "../assets/images/logo.png"
 import { Helmet } from 'react-helmet';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -17,13 +17,13 @@ const handleCart = () => {
                     <div className="col-12">
                         <nav className="main-nav">
                             {/* ***** Logo Start ***** */}
-                            <a href="index.html" className="logo">
+                            <Link to="/" className="logo">
                                 <img src={Logo} alt="Logo" />
-                            </a>
+                            </Link>
                             {/* ***** Logo End ***** */}
                             {/* ***** Menu Start ***** */}
                             <ul className="nav">
-                                <li className="scroll-to-section"><a href="#top" className="active">Trang chủ</a></li>
+                                <li className="scroll-to-section"><Link to="/" className="active">Trang chủ</Link></li>
                                 <li className="scroll-to-section"><a href="#men">Nam</a></li>
                                 <li className="scroll-to-section"><a href="#women">Nữ</a></li>
                                 <li className="scroll-to-section"><a href="#kids">Trẻ em</a></li>
